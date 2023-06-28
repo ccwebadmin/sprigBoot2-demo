@@ -1,4 +1,4 @@
-package com.cc.sprigboot2demo.bean;
+package com.cc.springboot2demo.bean;
 
 /**
  * @author cc

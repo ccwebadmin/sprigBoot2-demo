@@ -1,14 +1,20 @@
-package com.cc.sprigboot2demo;
+package com.cc.springboot2demo;
 
-import com.cc.sprigboot2demo.bean.Pet;
-import com.cc.sprigboot2demo.bean.User;
-import com.cc.sprigboot2demo.config.MyConfig;
-import com.cc.sprigboot2demo.testController.TestController;
+import com.cc.springboot2demo.bean.Pet;
+import com.cc.springboot2demo.bean.User;
+import com.cc.springboot2demo.config.MyConfig;
+import com.cc.springboot2demo.testController.TestController;
+import com.fasterxml.jackson.datatype.jdk8.LongStreamSerializer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
+/**
+ * @ComponentScan 默认包扫描的位置，程序入口所在目录下 “com.cc.springboot2demo”
+ */
 @SpringBootApplication
+//@ComponentScan("com.cc.springboot2demo")
 public class SprigBoot2DemoApplication {
 
     public static void main(String[] args) {
@@ -53,15 +59,28 @@ public class SprigBoot2DemoApplication {
         //com.cc.sprigboot2demo.config.MyConfig$$EnhancerBySpringCGLIB$$87dd1b25@3af7d855
         //@Configuration(proxyBeanMethods = false) 情况下:
         // com.cc.sprigboot2demo.config.MyConfig@7601bc96
-        System.out.println(bean);
+//        System.out.println(bean);
         //保持组件单实例
         User user = bean.user01();
         User user1 = bean.user01();
         //@Configuration(proxyBeanMethods = true)输出为true
         //@Configuration(proxyBeanMethods = false)输出为false
-        System.out.println(user == user1);
-        Pet tom = run.getBean("tomcatPet", Pet.class);
-        System.out.println("用户的宠物：" + (user01.getPet() == tom));
+//        System.out.println(user == user1);
+//        Pet tom = run.getBean("tomcatPet", Pet.class);
+//        System.out.println("用户的宠物：" + (user01.getPet() == tom));
+
+        //获取@Import引入的组件
+        String[] beanNamesForType = run.getBeanNamesForType(User.class);
+        for (String s : beanNamesForType) {
+            System.out.println(s);
+        }
+
+        LongStreamSerializer longStreamSerializer = run.getBean(LongStreamSerializer.class);
+        System.out.println(longStreamSerializer);
+        //输出效果如下
+//        com.cc.springboot2demo.bean.User
+//                user01
+//        com.fasterxml.jackson.datatype.jdk8.LongStreamSerializer@178f268a
 
     }
 

@@ -1,9 +1,13 @@
-package com.cc.sprigboot2demo.config;
+package com.cc.springboot2demo.config;
 
-import com.cc.sprigboot2demo.bean.Pet;
-import com.cc.sprigboot2demo.bean.User;
+import com.cc.springboot2demo.bean.Pet;
+import com.cc.springboot2demo.bean.User;
+import com.fasterxml.jackson.datatype.jdk8.LongStreamSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+
+import javax.annotation.Resource;
 
 /**
  * 配置类
@@ -30,10 +34,13 @@ import org.springframework.context.annotation.Configuration;
  *
  */
 @Configuration(proxyBeanMethods = true)
+@Import({User.class, LongStreamSerializer.class})
 public class MyConfig {
 
     //默认Bean的名字方法名 也就是user01
     //@Bean：给容器中添加组件。以方法名作为组件的id。返回类型就是组件类型。返回的值，就是组件在容器中的实例
+    @Resource
+    LongStreamSerializer longStreamSerializer;
     @Bean
     public User user01() {
         User zhangsan = new User("zhangsan", 18);
